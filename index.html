@@ -90,20 +90,43 @@
         <!-- Projects -->
         <section class="reveal">
             <h3 class="section-title">Featured Work</h3>
-            <a href="https://github.com/keshavthesharma/Rating-Review-Backend" target="_blank" class="glass-card project-card">
-                <div class="card-content">
-                    <div class="project-header">
-                        <h4>Rating and Review Backend</h4>
-                        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            
+            <!-- Added a flex column wrapper to nicely space multiple projects -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                
+                <!-- Project 1: Rating and Review Backend -->
+                <a href="https://github.com/keshavthesharma/Rating-Review-Backend" target="_blank" class="glass-card project-card">
+                    <div class="card-content">
+                        <div class="project-header">
+                            <h4>Rating and Review Backend</h4>
+                            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </div>
+                        <p>A zero-dependency REST API featuring custom token authentication and dynamic review aggregation.</p>
+                        <div class="tech-stack">
+                            <span>Python</span>
+                            <span>SQLite</span>
+                            <span>REST API</span>
+                        </div>
                     </div>
-                    <p>A zero-dependency REST API featuring custom token authentication and dynamic review aggregation.</p>
-                    <div class="tech-stack">
-                        <span>Python</span>
-                        <span>SQLite</span>
-                        <span>REST API</span>
+                </a>
+
+                <!-- Project 2: Spotify Clone -->
+                <a href="https://github.com/keshavthesharma/Spotify-Clone" target="_blank" class="glass-card project-card">
+                    <div class="card-content">
+                        <div class="project-header">
+                            <h4>Spotify Clone</h4>
+                            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </div>
+                        <p>A responsive web interface replicating the core design and audio playback features of Spotify.</p>
+                        <div class="tech-stack">
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+
+            </div>
         </section>
 
         <!-- Footer / Contact -->
