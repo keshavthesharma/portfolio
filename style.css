@@ -1,11 +1,19 @@
 :root {
-    --bg-base: #000000;
+    /* Softened base from pure black to a deep, easy-on-the-eyes zinc */
+    --bg-base: #09090b; 
     --text-primary: #f4f4f5;
     --text-secondary: #a1a1aa;
     --border-glass: rgba(255, 255, 255, 0.1);
     --border-glow: rgba(255, 255, 255, 0.25);
     --bg-glass: rgba(25, 25, 25, 0.4);
-    --bg-glass-hover: rgba(35, 35, 35, 0.6);
+    
+    /* Gradient Color Coding */
+    --color-backend: rgba(139, 92, 246, 1);
+    --color-frontend: rgba(16, 185, 129, 1);
+    
+    --grad-backend: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    --grad-frontend: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+    --grad-accent: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
 }
 
 * {
@@ -16,12 +24,15 @@
 
 body {
     background-color: var(--bg-base);
+    /* Adds a subtle, rich glow to the center of the screen */
+    background-image: radial-gradient(circle at 50% 40%, #16161f 0%, transparent 80%);
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     min-height: 100vh;
+    transition: background-color 0.5s ease;
 }
 
 /* --- Premium Background Effects --- */
@@ -30,7 +41,7 @@ body {
     top: 0; left: 0; width: 100vw; height: 100vh;
     pointer-events: none;
     z-index: 50;
-    opacity: 0.04;
+    opacity: 0.05;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
@@ -44,27 +55,43 @@ body {
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
+    /* Increased blur to make the colors wash smoothly across the black space */
+    filter: blur(120px); 
     opacity: 0.4;
     animation: float 20s infinite ease-in-out alternate;
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
 }
 
+/* Color Coded Background Orbs - Increased size to fill the screen better */
 .orb-1 {
-    width: 40vw; height: 40vw;
-    background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
-    top: -10%; left: -10%;
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%); 
+    top: -20%; left: -20%;
 }
 
 .orb-2 {
-    width: 30vw; height: 30vw;
-    background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
-    bottom: 20%; right: -5%;
+    width: 55vw; height: 55vw;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%); 
+    bottom: -10%; right: -20%;
     animation-delay: -10s;
 }
 
 @keyframes float {
     0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(5%, 10%) scale(1.1); }
+    100% { transform: translate(5%, 5%) scale(1.1); }
+}
+
+/* --- Interactive Background Logic --- */
+body:has(.skill-category:nth-child(1):hover) .orb-1 {
+    opacity: 0.7;
+    filter: blur(90px);
+    transform: scale(1.1) translate(2%, 2%);
+}
+
+body:has(.skill-category:nth-child(2):hover) .orb-2 {
+    opacity: 0.7;
+    filter: blur(90px);
+    transform: scale(1.1) translate(-2%, -2%);
 }
 
 /* --- Layout & Typography --- */
@@ -96,16 +123,18 @@ body {
 
 .status-pill .dot {
     width: 8px; height: 8px;
-    background-color: #22c55e;
+    background: var(--grad-frontend);
     border-radius: 50%;
-    box-shadow: 0 0 10px #22c55e;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
 }
 
 h1 {
     font-size: 3.5rem;
     font-weight: 700;
     letter-spacing: -0.05em;
-    color: #ffffff;
+    background: var(--grad-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
     line-height: 1.1;
 }
@@ -135,7 +164,9 @@ h1 {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--text-primary);
+    background: linear-gradient(90deg, #f4f4f5 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 1.5rem;
     font-weight: 700;
 }
@@ -148,7 +179,7 @@ h1 {
     padding: 1.75rem;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Education */
@@ -180,58 +211,116 @@ h1 {
     font-size: 0.95rem;
 }
 
-/* Skills */
+/* --- Centralized & Color-Coded Skills --- */
 .skills-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
 }
 
 @media (min-width: 600px) {
-    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .skills-grid { 
+        flex-direction: row; 
+    }
+    .skill-category {
+        flex: 1;
+    }
+}
+
+.skill-category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Color Code the Cards on Hover */
+.skill-category:nth-child(1):hover {
+    background: rgba(139, 92, 246, 0.05);
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+.skill-category:nth-child(2):hover {
+    background: rgba(16, 185, 129, 0.05);
+    border-color: rgba(16, 185, 129, 0.3);
 }
 
 .category-name {
     font-size: 1rem;
     color: var(--text-primary);
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     font-weight: 600;
 }
 
 .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.6rem;
+    justify-content: center;
 }
 
 .tags span {
     font-family: 'Space Mono', monospace;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border-glass);
-    padding: 0.3rem 0.6rem;
+    padding: 0.3rem 0.7rem;
     border-radius: 8px;
     font-size: 0.75rem;
     color: var(--text-secondary);
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    cursor: default;
 }
 
-.tags span:hover {
-    color: #fff;
-    border-color: var(--border-glow);
-    background: rgba(255, 255, 255, 0.1);
+/* Color Coding: Backend Tags (Blue/Purple) */
+.skill-category:nth-child(1) .tags span:hover {
+    color: #ffffff;
+    border-color: rgba(139, 92, 246, 0.6);
+    background: rgba(59, 130, 246, 0.15);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+    transform: translateY(-2px);
 }
 
-/* Projects */
+/* Color Coding: Frontend Tags (Emerald/Teal) */
+.skill-category:nth-child(2) .tags span:hover {
+    color: #ffffff;
+    border-color: rgba(16, 185, 129, 0.6);
+    background: rgba(20, 184, 166, 0.15);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    transform: translateY(-2px);
+}
+
+/* --- Projects --- */
 .project-card {
     display: block;
     text-decoration: none;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--grad-backend);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
 }
 
 .project-card:hover {
-    background: var(--bg-glass-hover);
-    border-color: var(--border-glow);
-    transform: translateY(-2px);
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.15);
+}
+
+.project-card:hover::before {
+    opacity: 0.05;
+}
+
+.card-content {
+    position: relative;
+    z-index: 1;
 }
 
 .project-header {
@@ -262,8 +351,8 @@ h1 {
 }
 
 .project-card:hover .arrow-icon {
-    color: #fff;
-    transform: translate(2px, -2px);
+    color: #a78bfa;
+    transform: translate(3px, -3px);
 }
 
 .tech-stack {
@@ -278,7 +367,7 @@ h1 {
     text-transform: uppercase;
 }
 
-/* Footer / Socials */
+/* --- Footer / Socials --- */
 .social-links {
     display: flex;
     gap: 2rem;
@@ -303,7 +392,7 @@ h1 {
     height: 1px;
     bottom: -4px;
     left: 0;
-    background-color: var(--text-primary);
+    background: var(--grad-backend);
     transform: scaleX(0);
     transform-origin: bottom right;
     transition: transform 0.3s ease;
