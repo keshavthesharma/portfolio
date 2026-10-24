@@ -1,0 +1,427 @@
+:root {
+    --bg-base: #09090b; 
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --border-glow: rgba(255, 255, 255, 0.25);
+    --bg-glass: rgba(25, 25, 25, 0.4);
+    
+    --grad-backend: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    --grad-accent: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-base);
+    background-image: radial-gradient(circle at 50% 40%, #16161f 0%, transparent 80%);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color 0.5s ease;
+}
+
+/* --- Premium Background Effects --- */
+.noise {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.ambient-light {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px); 
+    opacity: 0.3;
+    animation: float 20s infinite ease-in-out alternate;
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+}
+
+/* 1. Backend Orb (Pure Blue - Left) */
+.orb-1 {
+    width: 55vw; height: 55vw;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, transparent 70%); 
+    top: -20%; left: -20%;
+}
+
+/* 2. Frontend Orb (Faint Pink - Center) */
+.orb-2 {
+    width: 50vw; height: 50vw;
+    background: radial-gradient(circle, rgba(244, 114, 182, 0.25) 0%, transparent 70%); 
+    bottom: -15%; left: 25%;
+    animation-delay: -5s;
+}
+
+/* 3. Database Orb (Emerald Green - Right) */
+.orb-3 {
+    width: 45vw; height: 45vw;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%); 
+    top: 10%; right: -10%;
+    animation-delay: -12s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(5%, 5%) scale(1.1); }
+}
+
+/* --- Interactive Background Logic --- */
+body:has(.skill-category:nth-child(1):hover) .orb-1 {
+    opacity: 0.7; filter: blur(90px); transform: scale(1.1) translate(2%, 2%);
+}
+
+body:has(.skill-category:nth-child(2):hover) .orb-2 {
+    opacity: 0.7; filter: blur(90px); transform: scale(1.1) translate(0%, -5%);
+}
+
+body:has(.skill-category:nth-child(3):hover) .orb-3 {
+    opacity: 0.7; filter: blur(90px); transform: scale(1.1) translate(-2%, 2%);
+}
+
+/* --- Layout & Typography --- */
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    border-radius: 100px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.status-pill .dot {
+    width: 8px; height: 8px;
+    background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    background: var(--grad-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+}
+
+.role {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.divider {
+    color: #444;
+    margin: 0 0.5rem;
+}
+
+.bio {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 90%;
+}
+
+.section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: linear-gradient(90deg, #f4f4f5 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+/* --- Glass Cards --- */
+.glass-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 1.75rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Education */
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.info-header h4 {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-glass);
+}
+
+.sub-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* --- Centralized & Color-Coded Skills --- */
+.skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 600px) {
+    .skills-grid { 
+        flex-direction: row; 
+    }
+    .skill-category {
+        flex: 1;
+    }
+}
+
+.skill-category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.category-name {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+}
+
+.tags span {
+    font-family: 'Space Mono', monospace;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-glass);
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+/* 1. Backend Card & Tags (Pure Blue) */
+.skill-category:nth-child(1):hover { background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.3); }
+.skill-category:nth-child(1) .tags span:hover {
+    color: #ffffff;
+    border-color: rgba(59, 130, 246, 0.6);
+    background: rgba(59, 130, 246, 0.15);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+/* 2. Frontend Card & Tags (Faint Pinkish Gradient) */
+.skill-category:nth-child(2):hover { 
+    /* Subtle pink gradient for the card background */
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.08) 0%, rgba(225, 29, 72, 0.02) 100%);
+    border-color: rgba(244, 114, 182, 0.3); 
+}
+.skill-category:nth-child(2) .tags span:hover {
+    color: #ffffff;
+    border-color: rgba(244, 114, 182, 0.6);
+    /* Subtle pink gradient for the individual tag */
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.15) 0%, rgba(225, 29, 72, 0.1) 100%);
+    box-shadow: 0 0 15px rgba(244, 114, 182, 0.2);
+    transform: translateY(-2px);
+}
+
+/* 3. Database Card & Tags (Emerald Green) */
+.skill-category:nth-child(3):hover { background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.3); }
+.skill-category:nth-child(3) .tags span:hover {
+    color: #ffffff;
+    border-color: rgba(16, 185, 129, 0.6);
+    background: rgba(20, 184, 166, 0.15);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    transform: translateY(-2px);
+}
+
+/* --- Projects --- */
+.project-card {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--grad-backend);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+}
+
+.project-card:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.15);
+}
+
+.project-card:hover::before {
+    opacity: 0.05;
+}
+
+.card-content {
+    position: relative;
+    z-index: 1;
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.project-header h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.project-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.arrow-icon {
+    width: 22px;
+    height: 22px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .arrow-icon {
+    color: #a78bfa;
+    transform: translate(3px, -3px);
+}
+
+.tech-stack {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.tech-stack span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+}
+
+/* --- Footer / Socials --- */
+.social-links {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding-top: 2rem;
+}
+
+.social-links a {
+    font-family: 'Space Mono', monospace;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.social-links a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -4px;
+    left: 0;
+    background: var(--grad-backend);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--text-primary);
+}
+
+.social-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
